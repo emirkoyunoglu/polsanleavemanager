@@ -1,31 +1,50 @@
 # Conventions
 
-> **Template — filled during bootstrap.** Only rules that are real: every rule here should be
-> either enforced by tooling (preferred) or checked in review. Aspirations don't belong here.
+> Buradaki her kural ya araçla (tercih edilen) ya da review'da denetlenir.
 
 ## Language
-<!-- Set at bootstrap (step 0) and mirrored in AGENTS.md. Changing it later is allowed — edit both
-     places; existing documents are not translated retroactively. -->
-- Chat language (interviews, sessions): <!-- e.g. Turkish -->
-- Document language (docs/, specs, plans, ADRs, review and verify reports): <!-- e.g. Turkish -->
+- Chat language (interviews, sessions): Türkçe
+- Document language (docs/, specs, plans, ADRs, review and verify reports): Türkçe
 - Always English (protocol, not prose): ANEW core files, template headings and field labels,
   `Status:` values (Draft / Approved / In progress / Shipped), `Approved by / on:`, `Source:`.
-- Code identifiers, branch names, commit messages: <!-- default English; decide consciously -->
+- Code identifiers, branch names, commit messages: İngilizce. Kullanıcıya görünen metinler (arayüz,
+  hata mesajlarının `title`/`detail` alanları) Türkçe.
 - Agent messages (handoff summaries, refusals, `Next:` lines): chat language; command names, file
   paths and protocol fields verbatim.
 
 ## Language & framework versions
-<!-- Pin what matters. -->
+- Python 3.14 · FastAPI · SQLAlchemy 2.x (2.0 stili, typed `Mapped[...]`) · Alembic · Pydantic v2.
+- Veritabanı: SQLite (ADR 0002). Dialect'e özel SQL yazılmaz; her şey SQLAlchemy Core/ORM üzerinden.
+- Frontend: sade HTML + ES modülleri (JavaScript) + CSS; npm, bundler ve framework yok.
+- Bağımlılıklar `pyproject.toml` içinde sürüm aralığıyla, kilitli sürümler `requirements*.txt` ile tutulur.
 
 ## Naming
-<!-- Files, types, tests, branches — whatever the team must keep consistent. -->
+- Python: modül/fonksiyon/değişken `snake_case`, sınıf `PascalCase`, sabit `UPPER_SNAKE`.
+- Domain terimleri kodda `docs/domain.md` tablosundaki İngilizce karşılığıyla yazılır (`LeaveRequest`, `Entitlement`).
+- Testler: `tests/<unit|integration|e2e>/<module>/test_<konu>.py`; test adı davranışı söyler:
+  `test_br5_request_exceeding_balance_is_rejected`. İş kuralı testleri adında `brN` taşır.
+- HTTP: `/api/<module>/<kaynak-çoğul>` (`/api/leave/requests`), JSON alanları `snake_case`.
+- Frontend dosyaları: `static/<sayfa>.html`, `static/js/<sayfa>.js`, `static/css/`.
 
 ## Error handling
-<!-- The one blessed pattern. What never leaks to users. -->
+- Domain kodu yalnızca `app.shared.errors.DomainError` alt sınıflarını fırlatır (ör. `InsufficientBalance`, `NotAllowed`).
+- Tek bir FastAPI exception handler bunları **RFC 9457 `application/problem+json`** yanıtına çevirir
+  (`type`, `title`, `status`, `detail`; Türkçe metin). Doğrulama hataları 422, yetki 403, bulunamadı 404, kural ihlali 409/422.
+- Beklenmeyen hata: 500 + genel bir mesaj ve korelasyon kimliği; stack trace, SQL, dosya yolu ve
+  istisna metni kullanıcıya **asla** dönmez, yalnızca sunucu loguna yazılır.
+- Hata yutulmaz: `except Exception: pass` yasak.
 
 ## Data rules
-<!-- e.g. money/percentages use decimal types; timestamps are UTC; IDs are ... -->
+- İzin günleri saat içermeyen `datetime.date`; zaman damgaları timezone-aware UTC `datetime`.
+  Kullanıcıya gösterim `Europe/Istanbul`. Naive `datetime` yasak.
+- İzin süresi ve bakiye `decimal.Decimal` (0,5 adım); `float` yasak. Veritabanında `Numeric(5, 1)`.
+- Kimlikler UUID (v4); otomatik artan integer ID dışarı açılmaz.
+- "Bugün" ve "şimdi" yalnızca enjekte edilen bir saat (`Clock`) üzerinden alınır; testler sabit saat kullanır.
+- Kişisel veri (doğum tarihi, rapor nedeni) loglara yazılmaz.
 
 ## Enforced by tooling
-<!-- List what the compiler/linter/analyzers already enforce, so review doesn't re-litigate it.
-Wire new rules into `scripts/check` whenever possible — prose is advice, tooling is law. -->
+- `ruff check` (lint, import sırası) ve `ruff format --check` (biçim).
+- `mypy --strict` (tip kontrolü; `float` izin alanları da tiplerden yakalanır).
+- `lint-imports` (import-linter): `docs/architecture.md` "Forbidden dependencies" 1–3.
+- `pytest --strict-markers`: tanımsız marker kullanımı hata verir.
+Hepsi `scripts/check.conf` adımlarıdır.
