@@ -1,0 +1,18 @@
+/* Text #1a1a1a on #ffffff: contrast 17.4:1 (WCAG AA needs 4.5:1). */
+:root {
+  --text: #1a1a1a;
+  --background: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--background);
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

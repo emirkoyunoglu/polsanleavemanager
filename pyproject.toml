@@ -65,6 +65,8 @@ name = "1. Modules are reached only through their api.py"
 type = "forbidden"
 source_modules = ["app.main", "app.shared"]
 forbidden_modules = ["app.calendar.domain", "app.calendar.holiday_data"]
+# Reaching internals *through* api.py is the intended path; only direct imports are violations.
+allow_indirect_imports = true
 
 [[tool.importlinter.contracts]]
 name = "2. Domain packages stay framework-free"
