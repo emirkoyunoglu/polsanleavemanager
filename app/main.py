@@ -1,11 +1,11 @@
 """Application factory. Run locally: python -m uvicorn app.main:create_app --factory"""
 
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from app.calendar.api import DEFAULT_DATA_DIR, init_calendar
@@ -18,6 +18,12 @@ STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
 # The only routes reachable without authentication (spec 0001 R-2). Everything added later is
 # default-deny (docs/security.md); the authentication guard (F4) treats this set as the allowlist.
 PUBLIC_PATHS = frozenset({"/", "/api/health"})
+
+# docs/security.md, Input & output: same-origin resources only, no inline script; no MIME sniffing.
+SECURITY_HEADERS = {
+    "Content-Security-Policy": "default-src 'self'",
+    "X-Content-Type-Options": "nosniff",
+}
 
 
 def create_app(
@@ -45,6 +51,14 @@ def create_app(
     )
     install_problem_handlers(app)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+    @app.middleware("http")
+    async def security_headers(
+        request: Request, call_next: Callable[[Request], Awaitable[Response]]
+    ) -> Response:
+        response = await call_next(request)
+        response.headers.update(SECURITY_HEADERS)
+        return response
 
     @app.get("/", include_in_schema=False)
     def home() -> FileResponse:

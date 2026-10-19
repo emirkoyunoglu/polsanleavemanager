@@ -70,6 +70,13 @@ def test_unhandled_error_returns_generic_500_without_internals(database_url: str
         assert leaked not in response.text
 
 
+@pytest.mark.parametrize("path", ["/", "/api/health", "/static/css/main.css", "/olmayan-adres"])
+def test_security_headers_on_every_response(client: TestClient, path: str) -> None:
+    response = client.get(path)
+    assert response.headers["content-security-policy"] == "default-src 'self'"
+    assert response.headers["x-content-type-options"] == "nosniff"
+
+
 def test_startup_fails_on_invalid_holiday_data(database_url: str, tmp_path: Path) -> None:
     data_dir = tmp_path / "holidays"
     data_dir.mkdir()
