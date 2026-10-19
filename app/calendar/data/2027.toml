@@ -1,0 +1,86 @@
+# Resmi tatiller 2027 — 2429 sayılı Ulusal Bayram ve Genel Tatiller Hakkında Kanun.
+# Dini bayram tarihleri: Diyanet İşleri Başkanlığı 2027 dini günler takvimi (basında aktarıldığı
+# haliyle). Resmi kaynakla karşılaştırma: spec 0001 AC-21 (PR açıklamasında).
+# kind: "full" = tam gün tatil · "afternoon" = 13:00'ten itibaren yarım gün tatil (0,5 iş günü).
+# 19 Mayıs, Kurban Bayramı 4. günüyle çakışır: tek kayıt; çakışma ek tatil günü doğurmaz.
+year = 2027
+
+[[holiday]]
+date = 2027-01-01
+name = "Yılbaşı"
+kind = "full"
+
+[[holiday]]
+date = 2027-03-08
+name = "Ramazan Bayramı arifesi"
+kind = "afternoon"
+
+[[holiday]]
+date = 2027-03-09
+name = "Ramazan Bayramı 1. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-03-10
+name = "Ramazan Bayramı 2. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-03-11
+name = "Ramazan Bayramı 3. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-04-23
+name = "Ulusal Egemenlik ve Çocuk Bayramı"
+kind = "full"
+
+[[holiday]]
+date = 2027-05-01
+name = "Emek ve Dayanışma Günü"
+kind = "full"
+
+[[holiday]]
+date = 2027-05-15
+name = "Kurban Bayramı arifesi"
+kind = "afternoon"
+
+[[holiday]]
+date = 2027-05-16
+name = "Kurban Bayramı 1. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-05-17
+name = "Kurban Bayramı 2. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-05-18
+name = "Kurban Bayramı 3. gün"
+kind = "full"
+
+[[holiday]]
+date = 2027-05-19
+name = "Kurban Bayramı 4. gün; Atatürk'ü Anma, Gençlik ve Spor Bayramı"
+kind = "full"
+
+[[holiday]]
+date = 2027-07-15
+name = "Demokrasi ve Milli Birlik Günü"
+kind = "full"
+
+[[holiday]]
+date = 2027-08-30
+name = "Zafer Bayramı"
+kind = "full"
+
+[[holiday]]
+date = 2027-10-28
+name = "Cumhuriyet Bayramı arifesi"
+kind = "afternoon"
+
+[[holiday]]
+date = 2027-10-29
+name = "Cumhuriyet Bayramı"
+kind = "full"
