@@ -1,17 +1,30 @@
 # Testing
 
-> **Template — filled during bootstrap.**
-
 ## The contract
 - Every acceptance criterion maps to at least one test (criterion ↔ test map lives in the plan).
 - Tests assert **behavior**, not implementation details or mere status codes.
 - The whole suite runs inside `scripts/check` — one command, everywhere.
 
 ## Frameworks & layout
-<!-- Test framework(s), where tests live, naming pattern. -->
+- **pytest** (`--strict-markers`). Marker'lar `pyproject.toml` içinde tanımlıdır:
+  `integration` (FastAPI `TestClient` + test başına geçici SQLite dosyası, `tmp_path`),
+  `e2e` (Playwright for Python, headless Chromium). Marker'sız test = birim testi (saf Python, I/O yok).
+- Yerleşim: `tests/unit/<module>/`, `tests/integration/<module>/`, `tests/e2e/`; dosya `test_<konu>.py`.
+  Klasör yalnızca düzen içindir — profil ayrımı **marker seçicisiyle** yapılır (Two speeds, kural 4):
+  fast `-m "not integration and not e2e"`, full-only `-m integration` ve `-m e2e`.
+- **Uygulama yaşam döngüsü (e2e):** test edilen uygulamayı (uvicorn) tek bir session-scoped pytest
+  fixture'ı ayrı süreçte, geçici bir SQLite dosyası ve boş bir portla başlatır; `try/finally` ile
+  hata ve timeout dahil her durumda durdurur. Tarayıcıyı pytest-playwright fixture'ları yönetir.
+  e2e tek worker ve headless çalışır; `pytest-xdist` kullanılmaz.
+- Saat: testler `Clock`'u sabit bir tarihe ayarlar; gerçek "bugün"e bağlı test yazılmaz.
 
 ## What must be tested
-<!-- e.g. every business rule (BR-n), every boundary/forbidden dependency, critical flows E2E/smoke. -->
+- Her iş kuralı (`docs/domain.md` BR-n): en az bir birim testi, adında `brN`. Sınır değerleri dahil
+  (BR-1: kıdem 4 yıl 364 gün / 5 yıl; yaş 17 / 18 / 49 / 50).
+- Her domain invariant'ı ve her yasak bağımlılık (import-linter kontratı).
+- Her endpoint için yetki: izinli rol başarılı, izinsiz rol 403/404 (default-deny) — entegrasyon testi.
+- KVKK: rapor nedeni İK dışındaki rollerin API yanıtında yoktur — entegrasyon testi.
+- Kritik akışlar e2e: giriş → talep açma → yönetici onayı → bakiye düşümü; iptal akışı.
 
 ## Protected-tests rule
 Weakening asserts, deleting, or skipping tests to reach green is forbidden. A red test triggers
