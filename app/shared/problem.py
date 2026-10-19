@@ -6,6 +6,7 @@ server: unexpected errors are logged with a correlation id that the response car
 
 import logging
 import uuid
+from collections.abc import Mapping
 from typing import Any, cast
 
 from fastapi import FastAPI, Request
@@ -25,9 +26,16 @@ _HTTP_TEXTS: dict[int, tuple[str, str]] = {
 }
 
 
-def problem(status: int, title: str, detail: str, **extra: Any) -> JSONResponse:
+def problem(
+    status: int,
+    title: str,
+    detail: str,
+    *,
+    headers: Mapping[str, str] | None = None,
+    **extra: Any,
+) -> JSONResponse:
     body = {"type": "about:blank", "title": title, "status": status, "detail": detail, **extra}
-    return JSONResponse(body, status_code=status, media_type=PROBLEM_JSON)
+    return JSONResponse(body, status_code=status, media_type=PROBLEM_JSON, headers=headers)
 
 
 def install_problem_handlers(app: FastAPI) -> None:
@@ -44,7 +52,8 @@ async def _http_error(_request: Request, exc: Exception) -> Response:
     title, detail = _HTTP_TEXTS.get(
         error.status_code, ("İstek işlenemedi", "İstek işlenirken bir sorun oluştu.")
     )
-    return problem(error.status_code, title, detail)
+    # Protocol headers (405 Allow, 401 WWW-Authenticate) must survive the rewrite.
+    return problem(error.status_code, title, detail, headers=error.headers)
 
 
 async def _validation_error(_request: Request, exc: Exception) -> Response:

@@ -51,6 +51,14 @@ def test_unknown_path_returns_turkish_problem_json_404(client: TestClient) -> No
     assert body["detail"] == "İstenen adres bulunamadı."
 
 
+def test_method_not_allowed_keeps_allow_header(client: TestClient) -> None:
+    response = client.post("/api/health")
+    assert response.status_code == 405
+    assert response.headers["content-type"] == PROBLEM_JSON
+    assert response.headers["allow"] == "GET"
+    assert response.json()["title"] == "Yönteme izin verilmiyor"
+
+
 def test_unhandled_error_returns_generic_500_without_internals(database_url: str) -> None:
     app = create_app(Settings(database_url=database_url))
 
