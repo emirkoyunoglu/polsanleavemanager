@@ -15,17 +15,17 @@ def _real_calendar() -> None:
     init_calendar(DEFAULT_DATA_DIR)
 
 
-def test_spec_example_october_2026() -> None:
+def test_br3_spec_example_october_2026() -> None:
     assert working_days(date(2026, 10, 26), date(2026, 10, 30)) == Decimal("3.5")
 
 
-def test_spec_example_ramazan_2026() -> None:
+def test_br3_spec_example_ramazan_2026() -> None:
     assert working_days(date(2026, 3, 16), date(2026, 3, 23)) == Decimal("4.5")
 
 
-def test_spec_example_new_year_2027() -> None:
+def test_br3_spec_example_new_year_2027() -> None:
     assert working_days(date(2026, 12, 31), date(2027, 1, 1)) == Decimal("1")
 
 
-def test_spec_example_zafer_bayrami_2026() -> None:
+def test_br3_spec_example_zafer_bayrami_2026() -> None:
     assert working_days(date(2026, 8, 24), date(2026, 8, 30)) == Decimal("5")
