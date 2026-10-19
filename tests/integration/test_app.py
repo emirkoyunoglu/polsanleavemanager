@@ -78,6 +78,9 @@ def test_unhandled_error_returns_generic_500_without_internals(database_url: str
     assert re.fullmatch(r"[0-9a-f]{32}", body["correlation_id"])
     for leaked in ("secret", "internal", "SELECT", "RuntimeError", "Traceback", ".py"):
         assert leaked not in response.text
+    # 500s come from ServerErrorMiddleware, outside the http middleware: headers still required.
+    assert response.headers["content-security-policy"] == "default-src 'self'"
+    assert response.headers["x-content-type-options"] == "nosniff"
 
 
 def test_every_route_is_on_the_declared_public_surface(database_url: str) -> None:

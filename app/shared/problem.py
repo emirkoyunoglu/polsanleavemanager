@@ -18,6 +18,14 @@ from app.shared.errors import DomainError
 
 PROBLEM_JSON = "application/problem+json"
 
+# docs/security.md, Input & output: same-origin resources only, no inline script; no MIME sniffing.
+# app.main adds them to every response through middleware; problem() adds them itself because a
+# 500 is produced by ServerErrorMiddleware, which sits outside that middleware.
+SECURITY_HEADERS = {
+    "Content-Security-Policy": "default-src 'self'",
+    "X-Content-Type-Options": "nosniff",
+}
+
 logger = logging.getLogger("app")
 
 _HTTP_TEXTS: dict[int, tuple[str, str]] = {
@@ -35,7 +43,8 @@ def problem(
     **extra: Any,
 ) -> JSONResponse:
     body = {"type": "about:blank", "title": title, "status": status, "detail": detail, **extra}
-    return JSONResponse(body, status_code=status, media_type=PROBLEM_JSON, headers=headers)
+    all_headers = {**SECURITY_HEADERS, **(headers or {})}
+    return JSONResponse(body, status_code=status, media_type=PROBLEM_JSON, headers=all_headers)
 
 
 def install_problem_handlers(app: FastAPI) -> None:

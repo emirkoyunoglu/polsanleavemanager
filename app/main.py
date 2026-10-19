@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.calendar.api import DEFAULT_DATA_DIR, init_calendar
 from app.shared.db import create_db_engine, is_reachable, run_migrations
-from app.shared.problem import install_problem_handlers, problem
+from app.shared.problem import SECURITY_HEADERS, install_problem_handlers, problem
 from app.shared.settings import Settings
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
@@ -20,12 +20,6 @@ STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
 # guard (F4) uses these as its allowlist. A test pins every route to this list.
 PUBLIC_PATHS = frozenset({"/", "/api/health"})
 PUBLIC_PATH_PREFIXES = ("/static/",)
-
-# docs/security.md, Input & output: same-origin resources only, no inline script; no MIME sniffing.
-SECURITY_HEADERS = {
-    "Content-Security-Policy": "default-src 'self'",
-    "X-Content-Type-Options": "nosniff",
-}
 
 
 def create_app(
