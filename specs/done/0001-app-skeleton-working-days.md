@@ -1,6 +1,6 @@
 # Spec 0001 — Uygulama iskeleti + iş günü hesabı
 
-- Status: In progress
+- Status: Shipped
 - Mode: lite
 - Plan: `specs/plans/0001-plan.md`
 
@@ -77,44 +77,50 @@ yalnızca uygulama içi · tanımsız yıl → açık hata.
 Örnek tarihlerin haftanın günleri hesaplanarak doğrulandı.
 
 ### Uygulama iskeleti
-- [ ] AC-1 — Uygulama başlatıldığında sağlık kontrolü, kimlik bilgisi olmadan başarılı (çalışıyor) yanıtı döner; veritabanına erişilemediğinde 503 (hazır değil) döner.
-- [ ] AC-2 — Ana adres, dili `tr` olan, ürün adını başlık ve h1 olarak gösteren bir HTML sayfası döner.
-- [ ] AC-3 — Bilinmeyen bir adres 404 ve Türkçe `problem+json` yanıtı döner.
-- [ ] AC-4 — Beklenmeyen bir hata 500 ve genel bir Türkçe mesaj döner; yanıtta stack trace, dosya yolu ya da istisna metni bulunmaz.
-- [ ] AC-5 — Boş bir ortamda migration'lar sıfırdan sona kadar hatasız uygulanır ve ikinci kez uygulamak bir şey değiştirmez.
-- [ ] AC-6 — `./scripts/check` ve `./scripts/check --fast` gerçek adımlarla yeşildir (`CHECK GREEN (full, …)` ve `(fast, …)`); her iki profilde residue testi temizdir (boşta bir makinede).
-- [ ] AC-7 — Bir modülün başka bir modülün `api.py` dışındaki koduna import eklemesi `./scripts/check`'i kırmızıya çevirir (ihlal edilmiş bir örnekle gösterilir, sonra geri alınır).
-- [ ] AC-8 — CI'da `check` işi aynı adımlarla yeşil çalışır.
+- [x] AC-1 — Uygulama başlatıldığında sağlık kontrolü, kimlik bilgisi olmadan başarılı (çalışıyor) yanıtı döner; veritabanına erişilemediğinde 503 (hazır değil) döner.
+- [x] AC-2 — Ana adres, dili `tr` olan, ürün adını başlık ve h1 olarak gösteren bir HTML sayfası döner.
+- [x] AC-3 — Bilinmeyen bir adres 404 ve Türkçe `problem+json` yanıtı döner.
+- [x] AC-4 — Beklenmeyen bir hata 500 ve genel bir Türkçe mesaj döner; yanıtta stack trace, dosya yolu ya da istisna metni bulunmaz.
+- [x] AC-5 — Boş bir ortamda migration'lar sıfırdan sona kadar hatasız uygulanır ve ikinci kez uygulamak bir şey değiştirmez.
+- [x] AC-6 — `./scripts/check` ve `./scripts/check --fast` gerçek adımlarla yeşildir (`CHECK GREEN (full, …)` ve `(fast, …)`); her iki profilde residue testi temizdir (boşta bir makinede).
+- [x] AC-7 — Bir modülün başka bir modülün `api.py` dışındaki koduna import eklemesi `./scripts/check`'i kırmızıya çevirir (ihlal edilmiş bir örnekle gösterilir, sonra geri alınır).
+- [x] AC-8 — CI'da `check` işi aynı adımlarla yeşil çalışır.
 
 ### İş günü hesabı
-- [ ] AC-9 — Normal hafta: 2026-10-19 (Pzt) – 2026-10-23 (Cum) → 5.
-- [ ] AC-10 — Hafta sonu: 2026-10-24 (Cmt) – 2026-10-25 (Paz) → 0.
-- [ ] AC-11 — Tam ve yarım tatil: 2026-10-26 (Pzt) – 2026-10-30 (Cum) → 3,5 (28 Ekim 0,5; 29 Ekim 0).
-- [ ] AC-12 — Bayram ve arife: 2026-03-16 (Pzt) – 2026-03-23 (Pzt) → 4,5 (19 Mart arife 0,5; 20 Mart Ramazan Bayramı 0; 21–22 hafta sonu).
-- [ ] AC-13 — Tek gün = başlangıç ve bitiş aynı: normal iş günü → 1; tam tatil (2026-10-29) → 0; arife (2026-10-28) → 0,5.
-- [ ] AC-14 — Yarım gün seçimi: normal iş gününde sabah 0,5 ve öğleden sonra 0,5; 2026-10-28'de sabah 0,5 ve öğleden sonra 0; 2026-10-29'da ve bir Cumartesi'de 0.
-- [ ] AC-15 — Birden çok günlük aralıkta yarım gün seçimi reddedilir.
-- [ ] AC-16 — Yıl sınırı: 2026-12-31 (Per) – 2027-01-01 (Cum, yılbaşı) → 1.
-- [ ] AC-17 — Tanımsız yıl: 2027-12-31 – 2028-01-03 hesabı, 2028'i adıyla belirten bir hatayla reddedilir.
-- [ ] AC-18 — Başlangıç > bitiş (2026-10-23 – 2026-10-19) açık bir hatayla reddedilir.
-- [ ] AC-19 — Geçersiz tatil verisi (bozuk biçim, bilinmeyen tür, tekrar eden tarih, yıl dışı tarih — her biri ayrı) uygulamanın açılışını hatayla durdurur.
-- [ ] AC-20 — Sonuç her zaman `Decimal` türündedir ve 0,5'in katıdır; aynı girdiyle tekrar çağrı aynı sonucu verir.
-- [ ] AC-21 — 2026 ve 2027 tatil dosyaları resmi kaynakla karşılaştırılmıştır (karşılaştırma kaynağı ve sonucu PR'da).
-- [ ] AC-22 — `docs/domain.md` BR-3, yarım gün tatilleri içerecek şekilde güncellenmiştir.
-- [ ] AC-23 — Hafta sonuna denk gelen tatil çift düşülmez: 2026-08-24 (Pzt) – 2026-08-30 (Paz, Zafer Bayramı) → 5.
+- [x] AC-9 — Normal hafta: 2026-10-19 (Pzt) – 2026-10-23 (Cum) → 5.
+- [x] AC-10 — Hafta sonu: 2026-10-24 (Cmt) – 2026-10-25 (Paz) → 0.
+- [x] AC-11 — Tam ve yarım tatil: 2026-10-26 (Pzt) – 2026-10-30 (Cum) → 3,5 (28 Ekim 0,5; 29 Ekim 0).
+- [x] AC-12 — Bayram ve arife: 2026-03-16 (Pzt) – 2026-03-23 (Pzt) → 4,5 (19 Mart arife 0,5; 20 Mart Ramazan Bayramı 0; 21–22 hafta sonu).
+- [x] AC-13 — Tek gün = başlangıç ve bitiş aynı: normal iş günü → 1; tam tatil (2026-10-29) → 0; arife (2026-10-28) → 0,5.
+- [x] AC-14 — Yarım gün seçimi: normal iş gününde sabah 0,5 ve öğleden sonra 0,5; 2026-10-28'de sabah 0,5 ve öğleden sonra 0; 2026-10-29'da ve bir Cumartesi'de 0.
+- [x] AC-15 — Birden çok günlük aralıkta yarım gün seçimi reddedilir.
+- [x] AC-16 — Yıl sınırı: 2026-12-31 (Per) – 2027-01-01 (Cum, yılbaşı) → 1.
+- [x] AC-17 — Tanımsız yıl: 2027-12-31 – 2028-01-03 hesabı, 2028'i adıyla belirten bir hatayla reddedilir.
+- [x] AC-18 — Başlangıç > bitiş (2026-10-23 – 2026-10-19) açık bir hatayla reddedilir.
+- [x] AC-19 — Geçersiz tatil verisi (bozuk biçim, bilinmeyen tür, tekrar eden tarih, yıl dışı tarih — her biri ayrı) uygulamanın açılışını hatayla durdurur.
+- [x] AC-20 — Sonuç her zaman `Decimal` türündedir ve 0,5'in katıdır; aynı girdiyle tekrar çağrı aynı sonucu verir.
+- [x] AC-21 — 2026 ve 2027 tatil dosyaları resmi kaynakla karşılaştırılmıştır (karşılaştırma kaynağı ve sonucu PR'da).
+- [x] AC-22 — `docs/domain.md` BR-3, yarım gün tatilleri içerecek şekilde güncellenmiştir.
+- [x] AC-23 — Hafta sonuna denk gelen tatil çift düşülmez: 2026-08-24 (Pzt) – 2026-08-30 (Paz, Zafer Bayramı) → 5.
 
 ## Definition of Done
-- [ ] Every acceptance criterion mapped to proof (test or reproducible observation)
-- [ ] `scripts/check` green
-- [ ] Independent review done; real findings fixed, noise rejected with written rationale
-- [ ] Docs / ADRs updated if behavior or architecture changed
-- [ ] Spec moved to `specs/done/` (it becomes immutable there)
+- [x] Every acceptance criterion mapped to proof (test or reproducible observation)
+- [x] `scripts/check` green
+- [x] Independent review done; real findings fixed, noise rejected with written rationale
+- [x] Docs / ADRs updated if behavior or architecture changed
+- [x] Spec moved to `specs/done/` (it becomes immutable there)
+
+Kanıt (VERIFY, QA, 2026-10-19): kriter ↔ kanıt tablosu PR açıklamasında; `CHECK GREEN (full, 7 steps, 24 s)`,
+54 test, 23 mutasyonun her biri ilgili testi kırmızıya çevirdi. İnsan onayıyla kapananlar:
+AC-6 (full residue'da kalan süreçlerin üst süreci Windows Search / açık Chrome, check değil —
+üst süreç kanıtıyla kabul), AC-8 (CI run 39294750326 success, log satırı insan tarafından görüldü),
+AC-21 (2026/2027 tarihleri insan tarafından resmi kaynakla karşılaştırıldı).
 
 ## Scorecard (fill at ship — honest numbers make the process improvable)
 | Metric | Value |
 |---|---|
-| Spec revisions | |
-| Fix rounds | |
-| Review findings: real / noise | |
-| Regressions introduced | |
-| Bugs escaped to production | |
+| Spec revisions | 0 onaydan sonra (self-critique'ten 4 boşluk onaydan önce işlendi) |
+| Fix rounds | 2 (F-1…F-6; N-1) |
+| Review findings: real / noise | 6 / 1 (+1 investigate: Starlette `httpx2` uyarısı, ayrı iş) |
+| Regressions introduced | 0 |
+| Bugs escaped to production | — (henüz canlıda değil) |
