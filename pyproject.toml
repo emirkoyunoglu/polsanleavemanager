@@ -1,0 +1,87 @@
+[project]
+name = "polsan-leave-manager"
+version = "0.1.0"
+description = "Polsan izin yönetimi"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.148,<1",
+    "uvicorn>=0.54,<1",
+    "sqlalchemy>=2.1,<2.2",
+    "alembic>=1.20,<2",
+    "pydantic>=2.14,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.1,<10",
+    "httpx>=0.28,<1",
+    "ruff>=0.17,<0.18",
+    "mypy>=2.4,<3",
+    "import-linter>=2.15,<3",
+    "pip-audit>=2.10,<3",
+]
+
+# --- ruff ---------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+# Markdown is prose (docs, specs, ANEW prompts) — not formatted as code.
+extend-exclude = ["migrations/script.py.mako", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "A", "SIM", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+# `app.calendar` shadows the stdlib name on purpose (docs/architecture.md); only absolute imports are used.
+"app/calendar/__init__.py" = ["A005"]
+"tests/**" = ["S101"]
+
+# --- mypy ---------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.14"
+strict = true
+plugins = ["pydantic.mypy"]
+
+# --- pytest -------------------------------------------------------------------
+# Profiles split by marker selector (docs/testing.md, Two speeds, rule 4):
+#   fast: -m "not integration and not e2e"   full-only: -m "integration and not e2e" · -m e2e
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --import-mode=importlib"
+markers = [
+    "integration: FastAPI TestClient and/or SQLite file under tmp_path (full profile only)",
+    "e2e: Playwright against a running app (full profile only)",
+]
+
+# --- import-linter (docs/architecture.md, Forbidden dependencies) -------------
+# Extend these contracts whenever a module is added: its internals go into contract 1's
+# forbidden list, its domain package into contract 2's sources.
+[tool.importlinter]
+root_package = "app"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "1. Modules are reached only through their api.py"
+type = "forbidden"
+source_modules = ["app.main", "app.shared"]
+forbidden_modules = ["app.calendar.domain", "app.calendar.holiday_data"]
+
+[[tool.importlinter.contracts]]
+name = "2. Domain packages stay framework-free"
+type = "forbidden"
+source_modules = ["app.calendar.domain"]
+forbidden_modules = [
+    "fastapi",
+    "starlette",
+    "sqlalchemy",
+    "alembic",
+    "app.main",
+    "app.calendar.api",
+    "app.calendar.holiday_data",
+]
+
+[[tool.importlinter.contracts]]
+name = "3. Shared imports no domain module"
+type = "forbidden"
+source_modules = ["app.shared"]
+forbidden_modules = ["app.main", "app.calendar"]
