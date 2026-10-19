@@ -1,11 +1,13 @@
-"""Spec 0001 examples against the real 2026/2027 holiday files (AC-11, AC-12, AC-16, AC-23)."""
+"""Real holiday files: spec 0001 examples (AC-11, -12, -16, -23) and directory loading (AC-19)."""
 
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 
 import pytest
 
-from app.calendar.api import DEFAULT_DATA_DIR, init_calendar, working_days
+from app.calendar.api import DEFAULT_DATA_DIR, InvalidHolidayData, init_calendar, working_days
+from app.calendar.holiday_data import load_calendar
 
 pytestmark = pytest.mark.integration
 
@@ -29,3 +31,18 @@ def test_br3_spec_example_new_year_2027() -> None:
 
 def test_br3_spec_example_zafer_bayrami_2026() -> None:
     assert working_days(date(2026, 8, 24), date(2026, 8, 30)) == Decimal("5")
+
+
+def test_load_calendar_rejects_file_name_that_differs_from_year(tmp_path: Path) -> None:
+    (tmp_path / "2025.toml").write_text(
+        'year = 2026\n[[holiday]]\ndate = 2026-10-29\nname = "X"\nkind = "full"\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(InvalidHolidayData) as raised:
+        load_calendar(tmp_path)
+    assert "2025.toml" in raised.value.detail
+
+
+def test_load_calendar_rejects_empty_directory(tmp_path: Path) -> None:
+    with pytest.raises(InvalidHolidayData):
+        load_calendar(tmp_path)

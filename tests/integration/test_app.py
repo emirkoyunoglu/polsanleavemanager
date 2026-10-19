@@ -23,7 +23,9 @@ def test_health_ok_without_auth(client: TestClient) -> None:
 
 
 def test_health_503_when_db_unreachable(client: TestClient, tmp_path: Path) -> None:
-    # A directory is not a database file: every connection attempt fails.
+    # A directory is not a database file: every connection attempt fails. The lifespan disposes
+    # only the engine it finds at shutdown, so release the original one before swapping.
+    client.app.state.engine.dispose()  # type: ignore[attr-defined]
     client.app.state.engine = create_engine(f"sqlite:///{tmp_path.as_posix()}")  # type: ignore[attr-defined]
     response = client.get("/api/health")
     assert response.status_code == 503
