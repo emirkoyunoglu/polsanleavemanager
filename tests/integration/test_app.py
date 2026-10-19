@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 
 from app.calendar.api import InvalidHolidayData
-from app.main import create_app
+from app.main import PUBLIC_PATH_PREFIXES, PUBLIC_PATHS, create_app
 from app.shared.settings import Settings
 
 pytestmark = pytest.mark.integration
@@ -76,6 +76,14 @@ def test_unhandled_error_returns_generic_500_without_internals(database_url: str
     assert re.fullmatch(r"[0-9a-f]{32}", body["correlation_id"])
     for leaked in ("secret", "internal", "SELECT", "RuntimeError", "Traceback", ".py"):
         assert leaked not in response.text
+
+
+def test_every_route_is_on_the_declared_public_surface(database_url: str) -> None:
+    app = create_app(Settings(database_url=database_url))
+    for route in app.routes:
+        path = getattr(route, "path", "")
+        mount_prefix = f"{path}/"
+        assert path in PUBLIC_PATHS or mount_prefix in PUBLIC_PATH_PREFIXES, path
 
 
 @pytest.mark.parametrize("path", ["/", "/api/health", "/static/css/main.css", "/olmayan-adres"])

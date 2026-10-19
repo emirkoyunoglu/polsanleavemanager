@@ -15,9 +15,11 @@ from app.shared.settings import Settings
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
 
-# The only routes reachable without authentication (spec 0001 R-2). Everything added later is
-# default-deny (docs/security.md); the authentication guard (F4) treats this set as the allowlist.
+# The complete unauthenticated surface (spec 0001 R-2): exact paths plus path prefixes (the home
+# page's static assets). Everything else is default-deny (docs/security.md); the authentication
+# guard (F4) uses these as its allowlist. A test pins every route to this list.
 PUBLIC_PATHS = frozenset({"/", "/api/health"})
+PUBLIC_PATH_PREFIXES = ("/static/",)
 
 # docs/security.md, Input & output: same-origin resources only, no inline script; no MIME sniffing.
 SECURITY_HEADERS = {
