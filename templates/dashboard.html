@@ -23,7 +23,44 @@
   {% endif %}
 
   {% if filename %}
-  <p class="mb-3"><strong>{{ filename }}</strong> — toplam <strong>{{ total }}</strong> kayıt</p>
+  <p class="text-secondary mb-3">Dosya: <strong>{{ filename }}</strong></p>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header">Özet</div>
+        <div class="card-body">
+          <div class="row text-center g-2 mb-3">
+            <div class="col-6 col-md-3"><div class="fs-3 fw-semibold">{{ total }}</div><div class="small text-secondary">Toplam kayıt</div></div>
+            <div class="col-6 col-md-3"><div class="fs-3 fw-semibold">{{ summary.students }}</div><div class="small text-secondary">Öğrenci</div></div>
+            <div class="col-6 col-md-3"><div class="fs-3 fw-semibold">{{ summary.courses }}</div><div class="small text-secondary">Kurs</div></div>
+            <div class="col-6 col-md-3"><div class="fs-3 fw-semibold">%{{ summary.avg_progress }}</div><div class="small text-secondary">Ort. ilerleme</div></div>
+          </div>
+          <p class="mb-2">Tamamlanan ders: <strong>{{ summary.done_lessons }}</strong> / {{ summary.total_lessons }}</p>
+          <div>
+            {% for status, n in summary.statuses %}
+            <span class="badge text-bg-secondary me-1">{{ status }}: {{ n }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header">En sık 5 kurs</div>
+        <div class="card-body">
+          {% for c in summary.top_courses %}
+          <div class="mb-2">
+            <div class="d-flex justify-content-between small"><span>{{ c.name }}</span><span>{{ c.count }} kayıt</span></div>
+            <div class="progress" role="progressbar" aria-label="{{ c.name }}" aria-valuenow="{{ c.percent }}" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" style="width: {{ c.percent }}%">%{{ c.percent }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="card">
     <div class="card-header">İlk {{ preview|length }} satır</div>

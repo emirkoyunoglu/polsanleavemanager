@@ -12,5 +12,5 @@ yüklenen dosya diske yazılmaz.
 
 ## Tasks
 - [x] T-1 — LearnHouse ilerleme dosyasını (CSV: `csv` modülü, XLSX: `openpyxl`) bellekte yükle, sütunları doğrula.
-- [ ] T-2 — Özeti hesapla: kayıt, öğrenci, kurs sayısı, ders tamamlama ve ortalama ilerleme, en sık 5 kurs.
-- [ ] T-3 — Bootstrap 5 dashboard'u göster: yükleme formu, özet kartı, en sık 5 kurs çubuğu, ilk 20 satır, hata mesajı.
+- [x] T-2 — Özeti hesapla: kayıt, öğrenci, kurs sayısı, ders tamamlama ve ortalama ilerleme, en sık 5 kurs.
+- [x] T-3 — Bootstrap 5 dashboard'u göster: yükleme formu, özet kartı, en sık 5 kurs çubuğu, ilk 20 satır, hata mesajı.

@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import io
 import zipfile
+from collections import Counter
 from pathlib import Path
 
 from flask import Flask, render_template, request
@@ -87,6 +88,36 @@ def load_rows(filename: str, data: bytes) -> tuple[list[str], list[list[str]]]:
     return headers, rows
 
 
+def summarize(rows: list[list[str]]) -> dict[str, object]:
+    """Gerçek sütunlardan özet: sayılar, ders tamamlama, ortalama ilerleme, durumlar, en sık 5 kurs."""
+    col = {name: i for i, name in enumerate(EXPECTED_COLUMNS)}
+    done_lessons = total_lessons = 0
+    progress_sum = 0.0
+    for line_no, row in enumerate(rows, start=2):
+        try:
+            done, total = (int(part) for part in row[col["Tamamlanan / Toplam"]].split("/"))
+            progress_sum += float(row[col["İlerleme"]].replace(",", "."))
+        except ValueError:
+            raise FileFormatError(f"{line_no}. satırda ilerleme değerleri okunamadı.") from None
+        done_lessons += done
+        total_lessons += total
+
+    count = len(rows)
+    courses = Counter(row[col["Kurs"]] for row in rows)
+    top_courses = [
+        {"name": name, "count": n, "percent": round(100 * n / count, 1)} for name, n in courses.most_common(5)
+    ]
+    return {
+        "students": len({row[col["Öğrenci"]] for row in rows}),
+        "courses": len(courses),
+        "done_lessons": done_lessons,
+        "total_lessons": total_lessons,
+        "avg_progress": round(100 * progress_sum / count, 1) if count else 0.0,
+        "statuses": Counter(row[col["Durum"]] for row in rows).most_common(),
+        "top_courses": top_courses,
+    }
+
+
 @app.route("/", methods=["GET", "POST"])
 def index() -> str:
     context: dict[str, object] = {"error": None, "filename": None}
@@ -97,6 +128,7 @@ def index() -> str:
         else:
             try:
                 headers, rows = load_rows(upload.filename, upload.read())
+                summary = summarize(rows)
             except FileFormatError as exc:
                 context["error"] = str(exc)
             else:
@@ -104,6 +136,7 @@ def index() -> str:
                     filename=upload.filename,
                     headers=headers,
                     total=len(rows),
+                    summary=summary,
                     preview=rows[:PREVIEW_ROWS],
                 )
     return render_template("dashboard.html", **context)
