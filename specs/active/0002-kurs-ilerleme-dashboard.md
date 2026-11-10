@@ -14,3 +14,4 @@ yüklenen dosya diske yazılmaz.
 - [x] T-1 — LearnHouse ilerleme dosyasını (CSV: `csv` modülü, XLSX: `openpyxl`) bellekte yükle, sütunları doğrula.
 - [x] T-2 — Özeti hesapla: kayıt, öğrenci, kurs sayısı, ders tamamlama ve ortalama ilerleme, en sık 5 kurs.
 - [x] T-3 — Bootstrap 5 dashboard'u göster: yükleme formu, özet kartı, en sık 5 kurs çubuğu, ilk 20 satır, hata mesajı.
+- [x] T-4 — Arayüz: yükleme formu kaldırıldı; "Eğitim İlerleme Paneli" her istekte `ornek-veri/learnhouse-demo.csv`'yi (utf-8-sig) okur, kartlar + kurs ortalamaları + departman filtreli tablo gösterir.

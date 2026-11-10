@@ -1,21 +1,18 @@
-"""LearnHouse kurs ilerleme dashboard'u (spec 0002) — izin uygulamasından bağımsız, ayrı çalışır.
+"""Eğitim İlerleme Paneli (spec 0002) — izin uygulamasından bağımsız, ayrı çalışan Flask uygulaması.
 
 Çalıştırma: .venv/Scripts/python dashboard.py  →  http://127.0.0.1:5000/
-Yüklenen dosya yalnızca bellekte okunur; diske yazılmaz, veritabanı yoktur.
+Veri her istekte ornek-veri/learnhouse-demo.csv dosyasından okunur; CSV değişip sayfa yenilenince
+tüm değerler güncellenir. Veritabanı yoktur.
 """
 
 from __future__ import annotations
 
 import csv
-import io
-import zipfile
-from collections import Counter
 from pathlib import Path
 
 from flask import Flask, render_template, request
-from openpyxl import load_workbook
-from openpyxl.utils.exceptions import InvalidFileException
 
+DATA_FILE = Path(__file__).resolve().parent / "ornek-veri" / "learnhouse-demo.csv"
 EXPECTED_COLUMNS = [
     "Sıra",
     "Öğrenci",
@@ -27,125 +24,104 @@ EXPECTED_COLUMNS = [
     "Kapsam",
     "Filtreler",
 ]
-PREVIEW_ROWS = 20
-MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+STATUS_BADGES = {"Tamamlandı": "text-bg-success", "Devam ediyor": "text-bg-primary"}
+TR_ALPHABET = "0123456789abcçdefgğhıijklmnoöprsştuüvyz"
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
 
 
-class FileFormatError(Exception):
-    """Dosya beklenen LearnHouse ilerleme biçiminde değil; mesaj kullanıcıya gösterilir."""
+class DataFileError(Exception):
+    """Veri dosyası okunamadı ya da beklenen biçimde değil; mesaj kullanıcıya gösterilir."""
 
 
-def _cell(value: object) -> str:
-    return "" if value is None else str(value).strip()
+def tr_sort_key(text: str) -> list[int]:
+    lowered = text.replace("I", "ı").replace("İ", "i").lower()
+    return [TR_ALPHABET.find(ch) if ch in TR_ALPHABET else len(TR_ALPHABET) + ord(ch) for ch in lowered]
 
 
-def _read_csv(data: bytes) -> list[list[str]]:
-    text = data.decode("utf-8-sig")
-    return [[_cell(v) for v in row] for row in csv.reader(io.StringIO(text))]
+def percent(ratio: float) -> str:
+    return f"%{ratio * 100:.1f}".replace(".", ",")
 
 
-def _read_xlsx(data: bytes) -> list[list[str]]:
-    workbook = load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+def load_records(path: Path = DATA_FILE) -> list[dict[str, object]]:
+    """CSV'yi utf-8-sig ile okur, sütunları doğrular ve satırları kayıtlara çevirir."""
     try:
-        sheet = workbook.active
-        return [[_cell(v) for v in row] for row in sheet.iter_rows(values_only=True)]
-    finally:
-        workbook.close()
+        with path.open(encoding="utf-8-sig", newline="") as handle:
+            table = [row for row in csv.reader(handle) if any(cell.strip() for cell in row)]
+    except FileNotFoundError:
+        raise DataFileError(f"Veri dosyası bulunamadı: {path.name}") from None
+    except (OSError, UnicodeDecodeError, csv.Error):
+        raise DataFileError(f"Veri dosyası okunamadı: {path.name}") from None
 
+    if not table or [h.strip() for h in table[0]] != EXPECTED_COLUMNS:
+        raise DataFileError("Veri dosyasının sütunları LearnHouse ilerleme biçimiyle eşleşmiyor.")
 
-def load_rows(filename: str, data: bytes) -> tuple[list[str], list[list[str]]]:
-    """Dosyayı okur, başlıkları doğrular; (başlıklar, veri satırları) döner."""
-    suffix = Path(filename).suffix.lower()
-    try:
-        if suffix == ".csv":
-            table = _read_csv(data)
-        elif suffix == ".xlsx":
-            table = _read_xlsx(data)
-        else:
-            raise FileFormatError("Yalnızca .csv ve .xlsx dosyaları desteklenir.")
-    except (UnicodeDecodeError, csv.Error, zipfile.BadZipFile, InvalidFileException, KeyError, OSError):
-        raise FileFormatError("Dosya okunamadı; bozuk ya da beklenen biçimde değil.") from None
-
-    table = [row for row in table if any(row)]
-    if not table:
-        raise FileFormatError("Dosya boş.")
-
-    headers = table[0]
-    while headers and not headers[-1]:
-        headers = headers[:-1]
-    if headers != EXPECTED_COLUMNS:
-        raise FileFormatError("Sütunlar LearnHouse kurs ilerleme dışa aktarımıyla eşleşmiyor.")
-
-    rows = []
+    records = []
     for line_no, row in enumerate(table[1:], start=2):
-        row = row + [""] * (len(headers) - len(row))
-        if any(row[len(headers):]):
-            raise FileFormatError(f"{line_no}. satırda fazladan sütun var.")
-        rows.append(row[: len(headers)])
-    return headers, rows
-
-
-def summarize(rows: list[list[str]]) -> dict[str, object]:
-    """Gerçek sütunlardan özet: sayılar, ders tamamlama, ortalama ilerleme, durumlar, en sık 5 kurs."""
-    col = {name: i for i, name in enumerate(EXPECTED_COLUMNS)}
-    done_lessons = total_lessons = 0
-    progress_sum = 0.0
-    for line_no, row in enumerate(rows, start=2):
+        if len(row) != len(EXPECTED_COLUMNS):
+            raise DataFileError(f"{line_no}. satırda sütun sayısı hatalı.")
+        cells = dict(zip(EXPECTED_COLUMNS, (cell.strip() for cell in row), strict=True))
         try:
-            done, total = (int(part) for part in row[col["Tamamlanan / Toplam"]].split("/"))
-            progress_sum += float(row[col["İlerleme"]].replace(",", "."))
+            done, total = (int(part) for part in cells["Tamamlanan / Toplam"].split("/"))
+            ratio = float(cells["İlerleme"].replace(",", "."))
         except ValueError:
-            raise FileFormatError(f"{line_no}. satırda ilerleme değerleri okunamadı.") from None
-        done_lessons += done
-        total_lessons += total
+            raise DataFileError(f"{line_no}. satırda ilerleme değerleri okunamadı.") from None
+        records.append(
+            {
+                "student": cells["Öğrenci"],
+                "department": cells["Departman"],
+                "course": cells["Kurs"],
+                "lessons": f"{done} / {total}",
+                "ratio": ratio,
+                "progress": percent(ratio),
+                "status": cells["Durum"],
+                "badge": STATUS_BADGES.get(cells["Durum"], "text-bg-secondary"),
+            }
+        )
+    return records
 
-    count = len(rows)
-    courses = Counter(row[col["Kurs"]] for row in rows)
-    top_courses = [
-        {"name": name, "count": n, "percent": round(100 * n / count, 1)} for name, n in courses.most_common(5)
+
+def summarize(records: list[dict[str, object]]) -> dict[str, object]:
+    """Kartlar ve kurs ortalamaları; seçili departmanın kayıtları üzerinden hesaplanır."""
+    count = len(records)
+    by_course: dict[str, list[float]] = {}
+    for rec in records:
+        by_course.setdefault(str(rec["course"]), []).append(float(rec["ratio"]))  # type: ignore[arg-type]
+    courses = [
+        {"name": name, "width": round(sum(r) / len(r) * 100, 1), "label": percent(sum(r) / len(r))}
+        for name, r in by_course.items()
     ]
+    courses.sort(key=lambda c: (-c["width"], tr_sort_key(c["name"])))  # type: ignore[arg-type,operator]
+    avg = sum(float(rec["ratio"]) for rec in records) / count if count else 0.0  # type: ignore[arg-type]
     return {
-        "students": len({row[col["Öğrenci"]] for row in rows}),
-        "courses": len(courses),
-        "done_lessons": done_lessons,
-        "total_lessons": total_lessons,
-        "avg_progress": round(100 * progress_sum / count, 1) if count else 0.0,
-        "statuses": Counter(row[col["Durum"]] for row in rows).most_common(),
-        "top_courses": top_courses,
+        "students": len({rec["student"] for rec in records}),
+        "enrollments": count,
+        "avg_progress": percent(avg),
+        "courses": courses,
     }
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.get("/")
 def index() -> str:
-    context: dict[str, object] = {"error": None, "filename": None}
-    if request.method == "POST":
-        upload = request.files.get("file")
-        if upload is None or not upload.filename:
-            context["error"] = "Lütfen bir dosya seçin."
-        else:
-            try:
-                headers, rows = load_rows(upload.filename, upload.read())
-                summary = summarize(rows)
-            except FileFormatError as exc:
-                context["error"] = str(exc)
-            else:
-                context.update(
-                    filename=upload.filename,
-                    headers=headers,
-                    total=len(rows),
-                    summary=summary,
-                    preview=rows[:PREVIEW_ROWS],
-                )
-    return render_template("dashboard.html", **context)
+    try:
+        records = load_records()
+    except DataFileError as exc:
+        return render_template("dashboard.html", error=str(exc))
 
-
-@app.errorhandler(413)
-def too_large(_error: Exception) -> tuple[str, int]:
-    message = f"Dosya çok büyük (en fazla {MAX_UPLOAD_BYTES // (1024 * 1024)} MB)."
-    return render_template("dashboard.html", error=message, filename=None), 413
+    departments = sorted({str(rec["department"]) for rec in records}, key=tr_sort_key)
+    selected = request.args.get("departman", "")
+    if selected not in departments:
+        selected = ""
+    visible = [rec for rec in records if not selected or rec["department"] == selected]
+    return render_template(
+        "dashboard.html",
+        error=None,
+        source=DATA_FILE.name,
+        departments=departments,
+        selected=selected,
+        summary=summarize(visible),
+        records=visible,
+    )
 
 
 if __name__ == "__main__":
