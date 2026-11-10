@@ -36,7 +36,9 @@ class DataFileError(Exception):
 
 def tr_sort_key(text: str) -> list[int]:
     lowered = text.replace("I", "ı").replace("İ", "i").lower()
-    return [TR_ALPHABET.find(ch) if ch in TR_ALPHABET else len(TR_ALPHABET) + ord(ch) for ch in lowered]
+    return [
+        TR_ALPHABET.find(ch) if ch in TR_ALPHABET else len(TR_ALPHABET) + ord(ch) for ch in lowered
+    ]
 
 
 def percent(ratio: float) -> str:
@@ -50,7 +52,7 @@ def load_records(path: Path = DATA_FILE) -> list[dict[str, object]]:
             table = [row for row in csv.reader(handle) if any(cell.strip() for cell in row)]
     except FileNotFoundError:
         raise DataFileError(f"Veri dosyası bulunamadı: {path.name}") from None
-    except (OSError, UnicodeDecodeError, csv.Error):
+    except OSError, UnicodeDecodeError, csv.Error:
         raise DataFileError(f"Veri dosyası okunamadı: {path.name}") from None
 
     if not table or [h.strip() for h in table[0]] != EXPECTED_COLUMNS:
