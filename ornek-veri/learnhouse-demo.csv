@@ -1,0 +1,73 @@
+﻿Sıra,Öğrenci,Departman,Kurs,Tamamlanan / Toplam,İlerleme,Durum,Kapsam,Filtreler
+1,İdil Günışık,Operasyon,Proje Yönetimi,0 / 10,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+2,İdil Günışık,Operasyon,Veri Okuryazarlığı,8 / 16,0.5,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+3,Taner Günışık,Finans,Proje Yönetimi,10 / 10,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+4,Taner Günışık,Finans,Dijital Çalışma Araçları,5 / 12,0.4166666666666667,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+5,Ekin Günışık,Bilgi Teknolojileri,Proje Yönetimi,10 / 10,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+6,Ekin Günışık,Bilgi Teknolojileri,Dijital Çalışma Araçları,2 / 12,0.16666666666666666,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+7,Beren Günışık,İnsan Kaynakları,Etkili Sunum,1 / 8,0.125,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+8,Beren Günışık,İnsan Kaynakları,Dijital Çalışma Araçları,5 / 12,0.4166666666666667,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+9,Demir Günışık,Satış,Dijital Çalışma Araçları,11 / 12,0.9166666666666666,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+10,Demir Günışık,Satış,Veri Okuryazarlığı,0 / 16,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+11,Selen Günışık,Operasyon,Dijital Çalışma Araçları,2 / 12,0.16666666666666666,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+12,Selen Günışık,Operasyon,Proje Yönetimi,10 / 10,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+13,Ilgın Günışık,Finans,Veri Okuryazarlığı,13 / 16,0.8125,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+14,Ilgın Günışık,Finans,Etkili Sunum,8 / 8,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+15,Bora Günışık,Bilgi Teknolojileri,Veri Okuryazarlığı,0 / 16,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+16,Bora Günışık,Bilgi Teknolojileri,Dijital Çalışma Araçları,7 / 12,0.5833333333333334,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+17,Duru Günışık,İnsan Kaynakları,Dijital Çalışma Araçları,12 / 12,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+18,Duru Günışık,İnsan Kaynakları,Proje Yönetimi,7 / 10,0.7,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+19,Doruk Günışık,Satış,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+20,Doruk Günışık,Satış,Proje Yönetimi,1 / 10,0.1,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+21,İpek Günışık,Operasyon,Dijital Çalışma Araçları,6 / 12,0.5,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+22,İpek Günışık,Operasyon,Etkili Sunum,3 / 8,0.375,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+23,Ayaz Günışık,Finans,Proje Yönetimi,6 / 10,0.6,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+24,Ayaz Günışık,Finans,Etkili Sunum,0 / 8,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+25,İdil Akpınarlı,Bilgi Teknolojileri,Dijital Çalışma Araçları,2 / 12,0.16666666666666666,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+26,İdil Akpınarlı,Bilgi Teknolojileri,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+27,Taner Akpınarlı,İnsan Kaynakları,Dijital Çalışma Araçları,6 / 12,0.5,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+28,Taner Akpınarlı,İnsan Kaynakları,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+29,Ekin Akpınarlı,Satış,Etkili Sunum,0 / 8,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+30,Ekin Akpınarlı,Satış,Proje Yönetimi,9 / 10,0.9,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+31,Beren Akpınarlı,Operasyon,Proje Yönetimi,10 / 10,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+32,Beren Akpınarlı,Operasyon,Etkili Sunum,6 / 8,0.75,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+33,Demir Akpınarlı,Finans,Dijital Çalışma Araçları,12 / 12,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+34,Demir Akpınarlı,Finans,Veri Okuryazarlığı,15 / 16,0.9375,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+35,Selen Akpınarlı,Bilgi Teknolojileri,Proje Yönetimi,6 / 10,0.6,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+36,Selen Akpınarlı,Bilgi Teknolojileri,Dijital Çalışma Araçları,3 / 12,0.25,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+37,Ilgın Akpınarlı,İnsan Kaynakları,Dijital Çalışma Araçları,8 / 12,0.6666666666666666,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+38,Ilgın Akpınarlı,İnsan Kaynakları,Etkili Sunum,0 / 8,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+39,Bora Akpınarlı,Satış,Etkili Sunum,2 / 8,0.25,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+40,Bora Akpınarlı,Satış,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+41,Duru Akpınarlı,Operasyon,Etkili Sunum,7 / 8,0.875,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+42,Duru Akpınarlı,Operasyon,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+43,Doruk Akpınarlı,Finans,Etkili Sunum,0 / 8,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+44,Doruk Akpınarlı,Finans,Dijital Çalışma Araçları,10 / 12,0.8333333333333334,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+45,İpek Akpınarlı,Bilgi Teknolojileri,Etkili Sunum,8 / 8,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+46,İpek Akpınarlı,Bilgi Teknolojileri,Proje Yönetimi,2 / 10,0.2,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+47,Ayaz Akpınarlı,İnsan Kaynakları,Etkili Sunum,8 / 8,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+48,Ayaz Akpınarlı,İnsan Kaynakları,Dijital Çalışma Araçları,9 / 12,0.75,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+49,İdil Çamlıbel,Satış,Dijital Çalışma Araçları,9 / 12,0.75,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+50,İdil Çamlıbel,Satış,Proje Yönetimi,9 / 10,0.9,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+51,Taner Çamlıbel,Operasyon,Proje Yönetimi,5 / 10,0.5,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+52,Taner Çamlıbel,Operasyon,Veri Okuryazarlığı,0 / 16,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+53,Ekin Çamlıbel,Finans,Veri Okuryazarlığı,1 / 16,0.0625,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+54,Ekin Çamlıbel,Finans,Dijital Çalışma Araçları,12 / 12,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+55,Beren Çamlıbel,Bilgi Teknolojileri,Proje Yönetimi,7 / 10,0.7,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+56,Beren Çamlıbel,Bilgi Teknolojileri,Dijital Çalışma Araçları,12 / 12,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+57,Demir Çamlıbel,İnsan Kaynakları,Dijital Çalışma Araçları,0 / 12,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+58,Demir Çamlıbel,İnsan Kaynakları,Etkili Sunum,5 / 8,0.625,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+59,Selen Çamlıbel,Satış,Proje Yönetimi,10 / 10,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+60,Selen Çamlıbel,Satış,Etkili Sunum,3 / 8,0.375,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+61,Ilgın Çamlıbel,Operasyon,Etkili Sunum,8 / 8,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+62,Ilgın Çamlıbel,Operasyon,Veri Okuryazarlığı,4 / 16,0.25,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+63,Bora Çamlıbel,Finans,Proje Yönetimi,4 / 10,0.4,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+64,Bora Çamlıbel,Finans,Veri Okuryazarlığı,11 / 16,0.6875,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+65,Duru Çamlıbel,Bilgi Teknolojileri,Veri Okuryazarlığı,1 / 16,0.0625,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+66,Duru Çamlıbel,Bilgi Teknolojileri,Etkili Sunum,0 / 8,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+67,Doruk Çamlıbel,İnsan Kaynakları,Veri Okuryazarlığı,10 / 16,0.625,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+68,Doruk Çamlıbel,İnsan Kaynakları,Dijital Çalışma Araçları,12 / 12,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+69,İpek Çamlıbel,Satış,Proje Yönetimi,2 / 10,0.2,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+70,İpek Çamlıbel,Satış,Veri Okuryazarlığı,16 / 16,1.0,Tamamlandı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+71,Ayaz Çamlıbel,Operasyon,Veri Okuryazarlığı,0 / 16,0.0,Başlamadı,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam
+72,Ayaz Çamlıbel,Operasyon,Proje Yönetimi,4 / 10,0.4,Devam ediyor,"Kurgusal demo verisi. İlerleme, tamamlanan derslerin oranıdır.",Tüm izinli kapsam

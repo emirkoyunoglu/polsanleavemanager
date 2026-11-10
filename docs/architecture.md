@@ -34,6 +34,9 @@ tests/                  # unit/, integration/, e2e/ (docs/testing.md)
 
 Her modülün tabloları kendi önekini taşır (`leave_*`, `org_*`, …); başka modül o tablolara SQL ile erişmez.
 
+Resmi tatiller veritabanında değil, `app/calendar/data/<yıl>.toml` dosyalarında tutulur (spec 0001):
+yıllık güncelleme review'dan geçen bir PR'dır ve uygulama açılışta veriyi doğrular, hatalıysa başlamaz.
+
 ## Communication rules
 - Modüller arası iletişim **senkron fonksiyon çağrısıdır** ve yalnızca hedef modülün `api.py`
   dosyasındaki fonksiyonlar/DTO'lar üzerinden yapılır. ORM nesneleri modül dışına çıkmaz; DTO döner.
@@ -43,6 +46,10 @@ Her modülün tabloları kendi önekini taşır (`leave_*`, `org_*`, …); başk
 
 ## Forbidden dependencies (make them testable)
 Hepsi `pyproject.toml` içindeki import-linter kontratları ile `scripts/check` adımında denetlenir.
+**Yeni modül eklendiğinde kontratlar genişletilir** (import-linter'da "yalnızca api.py" kuralı
+`forbidden` kontratlarıyla ifade edilir): modülün iç paketleri kontrat 1'in yasak listesine,
+`domain` paketi kontrat 2'nin kaynaklarına, modülün kendisi kontrat 3'ün yasak listesine eklenir.
+Bu, o modülü getiren planın dosya listesinde yer alır ve review'da denetlenir.
 1. Bir modül, başka bir modülün `api.py` dışındaki hiçbir alt modülünü import edemez
    (`app.leave.service` → `app.organization.persistence` yasak; `app.organization.api` serbest).
 2. `app.<module>.domain` paketleri `fastapi`, `starlette`, `sqlalchemy` ve diğer modülleri import edemez.

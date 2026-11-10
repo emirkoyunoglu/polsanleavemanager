@@ -17,6 +17,12 @@
 - Veritabanı: SQLite (ADR 0002). Dialect'e özel SQL yazılmaz; her şey SQLAlchemy Core/ORM üzerinden.
 - Frontend: sade HTML + ES modülleri (JavaScript) + CSS; npm, bundler ve framework yok.
 - Bağımlılıklar `pyproject.toml` içinde sürüm aralığıyla, kilitli sürümler `requirements*.txt` ile tutulur.
+- Geliştirme ortamı: `python -m venv .venv` → etkinleştir (Git Bash: `source .venv/Scripts/activate`,
+  Linux/macOS: `source .venv/bin/activate`) → `python -m pip install -r requirements-dev.txt`.
+  `scripts/check` komutları etkin sanal ortamı varsayar.
+- Uygulamayı yerelde çalıştırma: `python -m uvicorn app.main:create_app --factory`. Veritabanı adresi
+  `PLM_DATABASE_URL` (`.env.example`); Windows'ta mutlak yol `sqlite:///C:/...` biçiminde yazılır,
+  Git Bash yolu (`/c/...`) değil.
 
 ## Naming
 - Python: modül/fonksiyon/değişken `snake_case`, sınıf `PascalCase`, sabit `UPPER_SNAKE`.

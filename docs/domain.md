@@ -31,8 +31,11 @@
   (hariç): 20 gün; 15 yıl ve üstü: 26 gün. 18 yaş altı ve 50 yaş ve üstü çalışanlara en az 20 gün.
   Hak, her hizmet yılı dolduğunda (işe giriş yıldönümü) tanımlanır; ilk yıl dolmadan yıllık izin hakkı yoktur.
 - **BR-2 Kullanılmayan yıllık izin yanmaz**, sonraki yıla devreder.
-- **BR-3 İş günü sayımı.** İzin süresi yalnızca iş günleri sayılarak hesaplanır; hafta sonu
-  (Cumartesi, Pazar) ve resmi tatiller (Calendar modülü) düşülmez (md. 56).
+- **BR-3 İş günü sayımı.** İzin süresi yalnızca iş günleri sayılarak hesaplanır; çalışma haftası
+  herkes için Pazartesi–Cuma'dır. Hafta sonu (Cumartesi, Pazar) ve tam gün resmi tatiller 0 sayılır
+  (md. 56). Yarım gün resmi tatiller — bayram arifeleri ve 28 Ekim, 13:00'ten itibaren (2429 sayılı
+  Kanun) — 0,5 iş günü sayılır. Hafta sonuna denk gelen tatil ayrıca düşülmez. Tatil takvimi
+  tanımlı olmayan bir yıla dokunan hesap yapılmaz (spec 0001).
 - **BR-4 Yarım gün.** Talepler 0,5 gün adımlarıyla açılabilir; tek günlük talep sabah ya da öğleden sonra yarım olabilir.
 - **BR-5 Eksi bakiye yok.** Yıllık izin talebi, bakiyeyi 0'ın altına düşürecekse açılamaz.
   Bekleyen talepler bakiyeden rezerve edilir.
